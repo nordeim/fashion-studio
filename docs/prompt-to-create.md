@@ -719,4 +719,9 @@ Next, please meticulously plan to create `AGENTS.md`, `CLAUDE.md`, `README.md` a
 - `https://github.com/nordeim/home-financing/blob/main/skills/project-architecture-document-md/SKILL.md`
 
 All documents to be in markdown format and to be created in the root folder of the new codebase.
-Finally, `git commit` locally and then `git push` to `git@github.com:nordeim/design-brand-strategy.git` using the ssh key:
+Finally, `git commit` locally and then `git push` to `git@github.com:nordeim/fashion-studio.git` using the ssh key:
+
+SSH key for `git push`:
+```
+
+```
