@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Builds
+.next/
+out/
+dist/
+*.tsbuildinfo
+.turbo/
+
+# Environment — never commit real secrets (see .env.example)
+.env
+.env.local
+.env.*.local
+!.env.example
+**/bak.env
+*.env.bak
+
+# Database (SQLite dev artifacts)
+db/*.db
+db/*.db-journal
+db/*.db-wal
+db/*.db-shm
+
+# Testing
+playwright-report/
+test-results/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+dev.log
+server.log
+server*.pid
+
+# Deployment
+.vercel/
+
+# SSH keys — never commit private keys anywhere in the tree
+ssh-key.txt
+**/ssh-key.txt
+id_github
+**/id_github
+*.key
+
+# Local server helpers
+start_server.sh.sample
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Python tool caches under skills/ (skills/ is excluded from checks/tests/
+# compilation per the operator contract, but caches are not repo content)
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.venv/
+**/__pycache__/
+*.pyc
+
+# ── Sandbox workspace artifacts (not part of the shipped codebase) ──
+.zscripts/
+Caddyfile
+upload/
+tool-results/
+download/
+worklog.md
+scripts-tmp/
+home-financing-src/
+.agent/

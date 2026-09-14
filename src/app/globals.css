@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/*
+ * moda.studio design tokens — extracted from the source site's compiled
+ * stylesheet and /DesignSystem page (see src/lib/design-system.ts for the
+ * documented palette). Monochrome neutrals with a beige accent; Space
+ * Grotesk for display type, system UI for body copy.
+ */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: #f8f7f4;
+  --color-foreground: #2c2c2c;
+  --color-muted: #555555;
+  /* Tertiary text — source uses #777777, adjusted to #666666 to clear WCAG
+     2.2 AA (4.5:1) on both #f8f7f4 and #e9e5de section backgrounds. */
+  --color-subtle: #666666;
+  --color-faint: #aaaaaa;
+  --color-accent: #d2c3b4;
+  --color-accent-light: #e9e5de;
+  --color-border: #e5e7eb;
+
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 35s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-33.3333%);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes grow-x {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-letter {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes menu-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Anchor targets clear the fixed navigation bar. */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: hsl(30 25% 76% / 0.45);
+    color: var(--color-foreground);
+  }
+}
+
+@layer components {
+  /* Hero heading: per-letter rise with a 40ms stagger (source: letterAnimation). */
+  .hero-letter {
+    display: inline-block;
+    animation: hero-letter 0.8s var(--ease-brand) both;
+    animation-delay: calc(var(--i) * 0.04s);
+  }
+
+  .animate-hero-rise {
+    animation: hero-rise 1.2s var(--ease-brand) both;
+  }
+
+  /* Generic mount fade-up; duration/delay driven by custom properties. */
+  .animate-fade-up {
+    animation: fade-up var(--fade-duration, 0.6s) var(--ease-brand) both;
+    animation-delay: var(--fade-delay, 0s);
+  }
+
+  .animate-grow-x {
+    animation: grow-x 1.5s var(--ease-brand) 0.8s both;
+  }
+
+  .animate-menu-down {
+    animation: menu-down 0.3s var(--ease-brand) both;
+  }
+
+  /* Scroll-reveal (IntersectionObserver flips data-visible). */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s var(--ease-brand),
+      transform 0.6s var(--ease-brand);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+
+  [data-reveal][data-variant="card"] {
+    transform: translateY(20px) scale(0.95);
+  }
+
+  [data-reveal][data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Animated underline highlight behind highlighted words (e.g. "2025"). */
+  .highlight-underline {
+    width: 0;
+    transition: width 0.8s var(--ease-brand) 0.4s;
+  }
+
+  [data-highlight][data-visible="true"] .highlight-underline {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Reveal and highlight content must never stay hidden when motion is reduced. */
+  [data-reveal],
+  [data-highlight] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .highlight-underline {
+    width: 100% !important;
+    transition: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
